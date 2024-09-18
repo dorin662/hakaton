@@ -13,38 +13,31 @@ screen.fill('white')
 
 pygame.mixer.init()
 
-grid = True
-while grid:
-    for row in range(rows):
-        pygame.draw.line(screen, 'green', (0, row * cell_size), (window_size[0], row * cell_size))
-    for col in range(cols):
-        pygame.draw.line(screen, 'green', (col * cell_size, 0), (col * cell_size, window_size[1]))
+width = 450
+height = 500
+screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('clicked on image')
+redSquare = pygame.image.load("C:\\Users\\jbt\\Downloads\\bush_flag.png").convert()
 
-    width = 450
-    height = 500
-    screen = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('clicked on image')
-    redSquare = pygame.image.load("C:\\Users\\jbt\\Downloads\\bush_flag.png").convert()
+x = 0
+y = 0
+screen.blit(redSquare, (x, y))
+pygame.display.flip()
 
-    x = 0
-    y = 0
-    screen.blit(redSquare, (x, y))
-    pygame.display.flip()
+running = True
+while running:
+    # screen.fill('white')
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            x, y = event.pos
+            if redSquare.get_rect().collidepoint(x, y):
+                sound_file = "sound_file.mp3"
+                tts = gTTS(text='hi', lang='en')
+                tts.save(sound_file)
+                sound = pygame.mixer.Sound(sound_file)
+                sound.play()
+                print('clicked on image')
 
-    running = True
-    while running:
-        # screen.fill('white')
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                if redSquare.get_rect().collidepoint(x, y):
-                    sound_file = "sound_file.mp3"
-                    tts = gTTS(text='hi', lang='en')
-                    tts.save(sound_file)
-                    sound = pygame.mixer.Sound(sound_file)
-                    sound.play()
-                    print('clicked on image')
-
-    pygame.quit()
+pygame.quit()
