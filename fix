@@ -1,35 +1,32 @@
 import pygame
 from gtts import gTTS
 
-
 pygame.init()
-
 
 pygame.mixer.init()
 
-width, height = 450, 500
+width, height = 550, 550
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Click on Emoji')
 
-
 redSquare = pygame.image.load("C:\\Users\\jbt\\Downloads\\pixil-frame-0 (6).png").convert()
 pic = pygame.image.load("C:\\Users\\jbt\\Downloads\\pixil-frame-0 (10).png").convert()
+mad = pygame.image.load("C:\\Users\\jbt\\Downloads\\pixil-frame-0 (12).png").convert()
 
+positions = [(0, 0), (101, 0), (201, 0)]
 
-positions = [(0, 0), (105, 0)]
-
-
-emotions = ['happy', 'sad']
+emotions = ['happy', 'sad', 'mad']
 
 # Create Rect objects for collision detection
 image_rects = [
     redSquare.get_rect(topleft=positions[0]),
-    pic.get_rect(topleft=positions[1])
+    pic.get_rect(topleft=positions[1]),
+    mad.get_rect(topleft=positions[2])
 ]
-
 
 screen.blit(redSquare, positions[0])
 screen.blit(pic, positions[1])
+screen.blit(mad, positions[2])
 pygame.display.flip()
 
 running = True
