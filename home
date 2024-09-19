@@ -1,0 +1,71 @@
+import pygame
+from gtts import gTTS
+
+pygame.init()
+
+pygame.mixer.init()
+purple = (106,13,173)
+width, height = 500, 500
+screen = pygame.display.set_mode((width, height))
+screen.fill(purple)
+pygame.display.set_caption('Click on Emoji')
+
+redSquare = pygame.image.load("C:\\Users\\jbt\\Downloads\\pixil-frame-0 (6).png").convert()
+pic = pygame.image.load("C:\\Users\\jbt\\Downloads\\pixil-frame-0 (10).png").convert()
+mad = pygame.image.load("C:\\Users\\jbt\\Downloads\\pixil-frame-0 (12).png").convert()
+scared = pygame.image.load("C:\\Users\\jbt\\Downloads\\scared-png.png").convert()
+scared = pygame.transform.scale(scared, (100, 100))
+tired = pygame.image.load("C:\\Users\\jbt\\Downloads\\Sleeping-png.webp").convert()
+tired = pygame.transform.scale(tired, (100, 100))
+hear = pygame.image.load("C:\\Users\\jbt\\Downloads\\hear.jpg").convert()
+hear = pygame.transform.scale(hear, (100, 100))
+give = pygame.image.load("C:\\Users\\jbt\\Downloads\\give.jfif").convert()
+give = pygame.transform.scale(give, (100, 100))
+help = pygame.image.load("C:\\Users\\jbt\\Downloads\\1111111111.png").convert()
+help = pygame.transform.scale(help, (100, 100))
+
+positions = [(0, 0), (102, 0), (204, 0), (306, 0), (407, 0), (0, 103), (102, 103), (204, 103)]
+
+emotions = ['happy', 'sad', 'mad', 'scared', 'tired', 'hear', 'give', 'help']
+
+# Create Rect objects for collision detection
+image_rects = [
+    redSquare.get_rect(topleft=positions[0]),
+    pic.get_rect(topleft=positions[1]),
+    mad.get_rect(topleft=positions[2]),
+    scared.get_rect(topleft=positions[3]),
+    tired.get_rect(topleft=positions[4]),
+    hear.get_rect(topleft=positions[5]),
+    give.get_rect(topleft=positions[6]),
+    help.get_rect(topleft=positions[7]),
+]
+
+screen.blit(redSquare, positions[0])
+screen.blit(pic, positions[1])
+screen.blit(mad, positions[2])
+screen.blit(scared, positions[3])
+screen.blit(tired, positions[4])
+screen.blit(hear, positions[5])
+screen.blit(give, positions[6])
+screen.blit(help, positions[7])
+pygame.display.flip()
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = event.pos
+
+            for i, rect in enumerate(image_rects):
+                if rect.collidepoint(mouse_x, mouse_y):
+                    emotion = emotions[i]
+                    sound_file = f"{emotion}_sound.mp3"
+                    tts = gTTS(text=emotion, lang='en')
+                    tts.save(sound_file)
+                    sound = pygame.mixer.Sound(sound_file)
+                    sound.play()
+                    print(f'Clicked on {emotion} emoji')
+
+pygame.quit()
